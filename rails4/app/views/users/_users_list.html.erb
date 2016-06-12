@@ -1,0 +1,40 @@
+<table class="table">
+    <tr>
+        <th>Avatar</th>
+        <th>Name</th>
+        <th>Theme</th>
+        <th>Actions</th>
+    </tr>
+    <% users.each do |user| %>
+        <tr>
+            <td>
+                <% unless user.avatar_file.empty? %>
+                    <img src="<%= ENV['IMAGE_BASE_PATH'] %><%= user.avatar_file %>" width="50" height="50">
+                <% end %>
+            </td>
+            <td>
+                <% if linkify_user %>
+                    <a href="<%= user_path user %>">
+                <% end %>
+
+                <%= user.name %>
+
+                <% if $linkify_user %>
+                    </a>
+                <% end %>
+            </td>
+            <td>
+                <%= user.theme %>
+            </td>
+            <td>
+                <% if user.id != current_user.id %>
+                    <% unless user.current_user_follow_ref %>
+                      <%= button_to 'Follow', follow_user_path(user), method: :put, class: 'btn btn-default' %>
+                    <% else %>
+                      <%= button_to 'Unfollow', unfollow_user_path(user), method: :delete, class: 'btn btn-default' %>
+                    <% end %>
+                <% end %>
+            </td>
+        </tr>
+    <% end %>
+</table>

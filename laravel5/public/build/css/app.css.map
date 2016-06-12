@@ -1,0 +1,1 @@
+{"version":3,"sources":["app.scss"],"names":[],"mappings":"AAEsB;EACpB,kCAAkC,EACnC","file":"app.css","sourcesContent":["// @import \"node_modules/bootstrap-sass/assets/stylesheets/bootstrap\";\n\n.table > tbody > tr > td {\n  vertical-align: middle !important;\n}\n"],"sourceRoot":"/source/"}

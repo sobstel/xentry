@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Xentry (Rails4)</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
+
+  <!-- Styles -->
+  <% if signed_in? and not current_user.theme.empty? %>
+    <link rel="stylesheet" href="https://bootswatch.com/<%= current_user.theme %>/bootstrap.min.css">
+  <% else %>
+    <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
+  <% end %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+
+  <style>
+    body {
+      font-family: 'Lato';
+    }
+
+    .fa-btn {
+      margin-right: 6px;
+    }
+  </style>
+
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body id="app-layout">
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- Collapsed Hamburger -->
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+            <span class="sr-only">Toggle Navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <div class="collapse navbar-collapse" id="app-navbar-collapse">
+        <!-- Left Side Of Navbar -->
+        <ul class="nav navbar-nav">
+            <li><a href="<%= users_path %>">Users</a></li>
+        </ul>
+
+        <!-- Right Side Of Navbar -->
+        <ul class="nav navbar-nav navbar-right">
+          <!-- Authentication Links -->
+          <% unless signed_in? %>
+              <li><a href="<%= sign_in_path %>">Login</a></li>
+          <% else %>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                  <%= current_user.name %> <span class="caret"></span>
+                </a>
+
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                    <a href="<%= sign_out_path %>" data-method="delete" rel="nofollow">
+                      <i class="fa fa-btn fa-sign-out"></i>
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <% unless flash.empty? %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <% flash.each do |key, value| %>
+            <%
+              css_class = case key
+                when 'notice'; 'success'
+                when 'alert'; 'danger'
+                else; key
+              end
+            %>
+            <p class="alert alert-<%= css_class %>"><%= value %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</body>
+</html>

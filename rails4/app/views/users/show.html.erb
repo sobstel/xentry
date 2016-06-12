@@ -1,0 +1,61 @@
+<div class="panel-heading">User profile: <%= @user.name %></div>
+
+<div class="panel-body">
+    <%= render partial: "users/users_list", locals: { users: [@user], linkify_user: false } %>
+
+    <% if (@user.followers.size > 0) %>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Followers
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <% @user.followers.each do |follower| %>
+                        <a href="<%= user_path(follower) %>">
+                            <%= follower.name %>
+                        </a>
+
+                        <% if follower != @user.followers.last %>
+                            ,
+                        <% end %>
+                    <% end %>
+                </tr>
+            </tr>
+        </tbody>
+    </table>
+    <% end %>
+
+    <% if (@user.activities.size > 0) %>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Followers
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @user.activities.each do |activity| %>
+                <tr>
+                    <td>
+                        <%= activity.created_at %>
+                    </td>
+                    <td>
+                        <%= activity.action %>
+                    </td>
+                    <td>
+                        <a href="<%= user_path(activity.from_user) %>">
+                            <%= activity.from_user.name %>
+                        </a>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <% end %>
+</div>
